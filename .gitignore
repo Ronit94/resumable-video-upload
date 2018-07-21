@@ -30,6 +30,7 @@
 /coverage
 /libpeerconnection.log
 npm-debug.log
+.env
 package-lock.json
 yarn-error.log
 testem.log
