@@ -14,6 +14,7 @@
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
     "mysql2": "^1.5.3",
-    "sequelize": "^4.38.0"
+    "sequelize": "^4.38.0",
+    "trim-request": "^1.0.6"
   }
 }
