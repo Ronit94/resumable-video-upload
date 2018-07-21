@@ -15,7 +15,7 @@
     "morgan": "~1.9.0",
     "mysql2": "^1.5.3",
     "sequelize": "^4.38.0",
-    "trim-request": "^1.0.6"
-
+    "trim-request": "^1.0.6",
+    "tus-node-server": "^0.3.0"
   }
 }
