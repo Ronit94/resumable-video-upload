@@ -1,17 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var NodeTusServer=require('tus-node-server')
-var fs=require('fs')
-const server = new NodeTusServer.Server();
-
-server.datastore = new NodeTusServer.FileStore({
-  directory: 'files/videos/user-uploads',// this is a temporary folder to save files
-  path: '/videos/tus-upload'// on success of file upload file will place to this directory
-});
-
+var trimeRequest=require('trim-request')
+var resumableVideoUploadController=require('./Controllers/resumablevideoUpload')
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.status(200).send({"status":1,"message":"Resumable video upload server running"});
+router.get('/', function (req, res) {
+      res.render('index',{'title':'Resumable Video upload'});
 });
-
+router.post('/api/files/resumable-upload',trimeRequest.all,resumableVideoUploadController.uploadVideos)
+router.patch('/api/files/resumable-upload/:fileId',trimeRequest.all,resumableVideoUploadController.patchController)
+router.all('/api/files/resumable-upload/*',trimeRequest.all,resumableVideoUploadController.requestAllController)
 module.exports = router;

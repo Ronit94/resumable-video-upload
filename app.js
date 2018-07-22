@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var methodOverride=require('method-override')
 var indexRouter = require('./routes/api/index');
 
 var app = express();
@@ -19,14 +19,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-
-app.use(function(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,PATCH,DELETE,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type , Access-Token,access-token,regenarate-token,auth_token,Authorization');
-  next();
-});
-
+ app.use(function(req, res, next) {
+   res.setHeader('Access-Control-Allow-Origin', '*');
+   res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,PATCH,DELETE,OPTIONS,HEAD');
+   res.setHeader('Access-Control-Allow-Headers', 'Content-Type','Tus-Resumable','Upload-Offset','Upload-Length','Upload-Metadata','Tus-Extension','x-http-method-override');
+   next();
+ });
+//  app.use(methodOverride('X-HTTP-Method-Override'))
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
