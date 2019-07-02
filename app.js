@@ -19,6 +19,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+/**
+ * @description Application cors rule setup
+ * @description Allow Method content PATCH and OPTIONS and HEAD, where HEAD is used to check whether the file metadata is same or not
+ * HEAD is a similar to GET but without a response body so it is light weighted, OPTIONS is used before any HTTP request send
+ */
  app.use(function(req, res, next) {
    res.setHeader('Access-Control-Allow-Origin', '*');
    res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,PATCH,DELETE,OPTIONS,HEAD');

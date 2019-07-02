@@ -3,6 +3,9 @@
 */
 const tus=require('tus-node-server')
 const server=new tus.Server()
+const Events=tus.EVENTS
+const decode=require('tus-metadata').decode
+const fs=require('fs')
 
 server.datastore = new tus.FileStore({
   directory: 'files/videos/user-uploads',
@@ -10,13 +13,13 @@ server.datastore = new tus.FileStore({
 });
 
 var resumableVideoUploadController={}
+
 resumableVideoUploadController.uploadVideos=function(req,res){
     console.log('req',req.filename)
     server.handle(req, res, {
        // filename: 'HelloRonitSarma',
         onSuccess (fileName, filePath, done) {
-            console.log('fileName',fileName,'filePath',filePath)
-          //Users.save({ user: req.user, uploads: [filePath] });
+          
           done();
         }
       });
@@ -56,5 +59,23 @@ resumableVideoUploadController.requestAllController=function(req,res){
         }
       });
 }
+
+/**
+ * On success Events complete
+ */
+
+
+
+server.on(Events.EVENT_UPLOAD_COMPLETE,(event)=>{
+  console.log(event)
+  let newFile=`${process.cwd()}/files/videos/user-uploads/${decode(event.file.upload_metadata).filename}`
+  let oldFile=`${process.cwd()}/files/videos/user-uploads/${event.file.id}`
+
+  fs.rename(oldFile,newFile,(err)=>{
+    if(err){
+      throw err
+    }
+  })
+})
 
 module.exports=resumableVideoUploadController

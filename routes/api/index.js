@@ -6,6 +6,9 @@ var resumableVideoUploadController=require('./Controllers/resumablevideoUpload')
 router.get('/', function (req, res) {
       res.render('index',{'title':'Resumable Video upload'});
 });
+/**'
+ * @description This are the three core api used for resumable file upload
+ */
 router.post('/api/files/resumable-upload',trimeRequest.all,resumableVideoUploadController.uploadVideos)
 router.patch('/api/files/resumable-upload/:fileId',trimeRequest.all,resumableVideoUploadController.patchController)
 router.all('/api/files/resumable-upload/*',trimeRequest.all,resumableVideoUploadController.requestAllController)
